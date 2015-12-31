@@ -21,7 +21,7 @@ module CarrierWave
       model_delegate_attribute :image_size, []
       model_delegate_attribute :width, 0
       model_delegate_attribute :height, 0
-      model_delegate_attribute :md5sum, ''
+      model_delegate_attribute :sha1sum, ''
     end
 
     def store_meta(options = {})
@@ -33,8 +33,8 @@ module CarrierWave
         self.image_size = dimensions
         self.width = width
         self.height = height
-        if options[:md5sum]
-          self.md5sum = Digest::MD5.hexdigest(File.read(self.file.path))
+        if options[:sha1sum]
+          self.sha1sum = Digest::SHA1.hexdigest(File.read(self.file.path))
         end
       end
     end

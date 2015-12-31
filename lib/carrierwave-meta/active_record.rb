@@ -1,7 +1,7 @@
 module CarrierWave
   module Meta
     module ActiveRecord
-      ALLOWED = %w(width height md5sum image_size file_size content_type)
+      ALLOWED = %w(width height sha1sum image_size file_size content_type)
 
       def carrierwave_meta_composed(single_attribute, *args)
         defined_attrs = args.map do |arg|

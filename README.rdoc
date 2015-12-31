@@ -14,7 +14,7 @@ Add the following line to your Gemfile:
     include CarrierWave::RMagick
     include CarrierWave::Meta
 
-    process :store_meta => [{md5sum: true}]
+    process :store_meta => [{sha1sum: true}]
     version :version do
       process :resize_to_fill => [200, 200]
       process :store_meta
@@ -30,20 +30,20 @@ Add the following line to your Gemfile:
   uploader.image_size   # [500, 300]
   uploader.file_size    # 20000
   uploader.content_type # "image/jpeg"
-  uploader.md5sum       # "fuuaasdfasdf...."
+  uploader.sha1sum       # "fuuaasdfasdf...."
 
   uploader.version.width        # 200
   uploader.version.height       # 200
   uploader.version.image_size   # [200, 200]
   uploader.version.file_zie     # less than 20000
   uploader.version.content_type # "image/jpeg"
-  uploader.version.md5sum       # nil
+  uploader.version.sha1sum       # nil
 
 = Saving values to database
 
 Simply create database columns to hold metadata in your model's table. Currently
 gem supports width, height, image_size ([width, height]), content_type,
-file_size and MD5 fields. Versions are supported too.
+file_size and SHA1 fields. Versions are supported too.
 
   class TestModel
     attr_accessor :image_width
@@ -51,14 +51,14 @@ file_size and MD5 fields. Versions are supported too.
     attr_accessor :image_image_size
     attr_accessor :image_content_type
     attr_accessor :image_file_size
-    attr_accessor :image_md5sum
+    attr_accessor :image_sha1sum
 
     attr_accessor :image_version_width
     attr_accessor :image_version_height
     attr_accessor :image_version_image_size
     attr_accessor :image_version_content_type
     attr_accessor :image_version_file_size
-    attr_accessor :image_version_md5sum
+    attr_accessor :image_version_sha1sum
   end
 
   file = File.open('test.jpg')
@@ -83,7 +83,7 @@ For now, works only with ActiveRecord.
     mount_uploader :image, TestUploader
     serialize :image_meta, OpenStruct
     carrierwave_meta_composed :image_meta,
-      :image, image_version: [:width, :height, :md5sum]
+      :image, image_version: [:width, :height, :sha1sum]
   end
 
   model = TestModel.new
